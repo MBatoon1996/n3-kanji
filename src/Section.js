@@ -12,7 +12,16 @@ class Section extends React.Component {
             pages: characters[params.get('章')],
             page: characters[params.get('章')][0],
             pageChars: '',
+            displayClass: 'd-none',
         };
+    }
+
+    showKanji = () => {
+        this.setState({ displayClass: 'd-block' });
+    }
+
+    hideKanji = () => {
+        this.setState({ displayClass: 'd-none'});
     }
 
     changePage = (event) => {
@@ -24,7 +33,7 @@ class Section extends React.Component {
     }
 
     render() {
-        const{ 章, page, pages, pageChars } = this.state;
+        const{ 章, page, pages, pageChars, displayClass } = this.state;
         const chars = Object.keys(pages).map(pgChoice => <option key={pgChoice} value={pgChoice}>{pgChoice}</option>)
         return(
             <React.Fragment>
@@ -38,10 +47,17 @@ class Section extends React.Component {
                 </form>
                 {Object.keys(pageChars).map(kanji => 
                     <div className="py-3">
+                        <h4 className={displayClass}>{kanji}</h4>
                         <h5 className="py-3">訓読み：{pageChars[kanji]['訓読み']}</h5>
                         <h5 className="py-3">音読み：{pageChars[kanji]['音読み']}</h5>
                     </div>
                 )}
+                <div className="container">
+                    <div className="row justify-content-around">
+                        <button onClick={this.showKanji}>Show</button>
+                        <button onClick={this.hideKanji}>Hide</button>
+                    </div>
+                </div>
 
             </React.Fragment>
         )
