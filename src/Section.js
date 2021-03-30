@@ -7,6 +7,8 @@ class Section extends React.Component {
 
         const params = new URLSearchParams(props.location.search);
 
+        this.myRef = React.createRef();
+
         this.state = {
             章: params.get('章') || '生活',
             pages: characters[params.get('章')],
@@ -43,11 +45,11 @@ class Section extends React.Component {
     }
 
     changePage = (event) => {
-        console.log("page is " + event.target.value);
-        console.log(characters[this.state.章][event.target.value]);
+        console.log("page is " + this.myRef.current.value);
+        console.log(characters[this.state.章][this.myRef.current.value]);
         this.setState({ 
-            page: event.target.value,
-            pageChars: characters[this.state.章][event.target.value], });
+            page: this.myRef.current.value,
+            pageChars: characters[this.state.章][this.myRef.current.value], });
         if(this.state.mode==="読み")
             this.setState({ displayClass: 'd-none' });
         else if (this.state.mode === "漢字")
@@ -59,10 +61,10 @@ class Section extends React.Component {
         const chars = Object.keys(pages).map(pgChoice => <option key={pgChoice} value={pgChoice}>{pgChoice}</option>)
         return(
             <React.Fragment>
-                <h1 className="text-center py-3">{章}</h1>
+                <h1 className="text-center py-3" onClick={this.changePage}>{章}</h1>
                 <form className="form-row p-3 justify-content-center">
                     <div className="form-group col-8 mb-0">
-                        <select value={page} className="form-control form-control-lg mb-2" onChange={this.changePage}>
+                        <select ref={this.myRef} value={page} className="form-control form-control-lg mb-2" onChange={this.changePage}>
                             {chars}
                         </select>
                     </div>
