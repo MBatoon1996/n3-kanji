@@ -19,11 +19,17 @@ class Section extends React.Component {
     }
 
     showKanji = () => {
-        this.setState({ displayClass: 'd-block' });
+        if(this.state.mode === '読み')
+            this.setState({ displayClass: 'd-block' });
+        else if (this.state.mode === '漢字')
+            this.setState({ readClass: 'd-block' });
     }
 
     hideKanji = () => {
-        this.setState({ displayClass: 'd-none'});
+        if(this.state.mode === '読み')
+            this.setState({ displayClass: 'd-none'});
+        else if (this.state.mode === '漢字')
+            this.setState({ readClass: 'd-none' });
     }
 
     changeMode = (event) => {
@@ -44,6 +50,8 @@ class Section extends React.Component {
             pageChars: characters[this.state.章][event.target.value], });
         if(this.state.mode==="読み")
             this.setState({ displayClass: 'd-none' });
+        else if (this.state.mode === "漢字")
+            this.setState({ readClass: 'd-none' });
     }
 
     render() {
