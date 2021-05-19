@@ -16,6 +16,7 @@ class Section extends React.Component {
             pageChars: '',
             displayClass: 'd-none',
             readClass: 'py-2 d-block',
+            buttonClass: 'd-none',
             mode: '読み',
             kanjiArray: [],
         };
@@ -38,7 +39,7 @@ class Section extends React.Component {
     changeMode = (event) => {
         this.setState({ mode: event.target.value });
         if(event.target.value === "漢字"){
-            this.setState({ readClass: "d-none", displayClass: 'd-block' });
+            this.setState({ readClass: "d-none", displayClass: 'd-block'});
         }
         else if(event.target.value === "読み"){
             this.setState({ readClass: "py-2 d-block", displayClass: 'd-none' });
@@ -52,6 +53,7 @@ class Section extends React.Component {
             page: this.myRef.current.value,
             pageChars: characters[this.state.章][this.myRef.current.value],
             kanjiArray: Object.keys(characters[this.state.章][this.myRef.current.value]),
+            buttonClass: "mx-3",
         });
         if(this.state.mode==="読み")
             this.setState({ displayClass: 'd-none' });
@@ -60,7 +62,7 @@ class Section extends React.Component {
     }
 
     render() {
-        const{ 章, page, pages, pageChars, displayClass, readClass, mode, kanjiArray} = this.state;
+        const{ 章, page, pages, pageChars, displayClass, buttonClass, readClass, mode, kanjiArray} = this.state;
         const chars = Object.keys(pages).map(pgChoice => <option key={pgChoice} value={pgChoice}>{pgChoice}</option>);
 
         let kunyomi1, onyomi1, onyomi2, kunyomi2, kunyomi3, kunyomi4, onyomi3, onyomi4;
@@ -107,32 +109,32 @@ class Section extends React.Component {
                     <h3 className={displayClass}>{kanjiArray[0]}</h3>
                     {kunyomi1}
                     {onyomi1}
+                    <button className={buttonClass} onClick={this.showKanji}>Show</button>
+                    <button className={buttonClass} onClick={this.hideKanji}>Hide</button>
                 </div>
 
                 <div className="py-3">
                     <h3 className={displayClass}>{kanjiArray[1]}</h3>
                     {kunyomi2}
                     {onyomi2}
+                    <button className={buttonClass} onClick={this.showKanji}>Show</button>
+                    <button className={buttonClass} onClick={this.hideKanji}>Hide</button>
                 </div>
 
                 <div className="py-3">
                     <h3 className={displayClass}>{kanjiArray[2]}</h3>
                     {kunyomi3}
                     {onyomi3}
+                    <button className={buttonClass} onClick={this.showKanji}>Show</button>
+                    <button className={buttonClass} onClick={this.hideKanji}>Hide</button>
                 </div>
 
                 <div className="py-3">
                     <h3 className={displayClass}>{kanjiArray[3]}</h3>
                     {kunyomi4}
                     {onyomi4}
-                </div>
-
-
-                <div className="container">
-                    <div className="row justify-content-around">
-                        <button onClick={this.showKanji}>Show</button>
-                        <button onClick={this.hideKanji}>Hide</button>
-                    </div>
+                    <button className={buttonClass} onClick={this.showKanji}>Show</button>
+                    <button className={buttonClass} onClick={this.hideKanji}>Hide</button>
                 </div>
 
             </React.Fragment>
