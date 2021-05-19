@@ -17,6 +17,7 @@ class Section extends React.Component {
             displayClass: 'd-none',
             readClass: 'py-2 d-block',
             mode: '読み',
+            kanjiArray: [],
         };
     }
 
@@ -49,7 +50,9 @@ class Section extends React.Component {
         console.log(characters[this.state.章][this.myRef.current.value]);
         this.setState({ 
             page: this.myRef.current.value,
-            pageChars: characters[this.state.章][this.myRef.current.value], });
+            pageChars: characters[this.state.章][this.myRef.current.value],
+            kanjiArray: Object.keys(characters[this.state.章][this.myRef.current.value]),
+        });
         if(this.state.mode==="読み")
             this.setState({ displayClass: 'd-none' });
         else if (this.state.mode === "漢字")
@@ -57,8 +60,32 @@ class Section extends React.Component {
     }
 
     render() {
-        const{ 章, page, pages, pageChars, displayClass, readClass, mode} = this.state;
-        const chars = Object.keys(pages).map(pgChoice => <option key={pgChoice} value={pgChoice}>{pgChoice}</option>)
+        const{ 章, page, pages, pageChars, displayClass, readClass, mode, kanjiArray} = this.state;
+        const chars = Object.keys(pages).map(pgChoice => <option key={pgChoice} value={pgChoice}>{pgChoice}</option>);
+
+        let kunyomi1, onyomi1, onyomi2, kunyomi2, kunyomi3, kunyomi4, onyomi3, onyomi4;
+
+        if(kanjiArray.length){
+            kunyomi1 = <h5 className={readClass}>訓読み：{pageChars[kanjiArray[0]]['訓読み']}</h5>
+            onyomi1 = <h5 className={readClass}>音読み：{pageChars[kanjiArray[0]]['音読み']}</h5>
+            kunyomi2 = <h5 className={readClass}>訓読み：{pageChars[kanjiArray[1]]['訓読み']}</h5>
+            onyomi2 = <h5 className={readClass}>音読み：{pageChars[kanjiArray[1]]['音読み']}</h5>
+            kunyomi3 = <h5 className={readClass}>訓読み：{pageChars[kanjiArray[2]]['訓読み']}</h5>
+            onyomi3 = <h5 className={readClass}>音読み：{pageChars[kanjiArray[2]]['音読み']}</h5>
+            kunyomi4 = <h5 className={readClass}>訓読み：{pageChars[kanjiArray[3]]['訓読み']}</h5>
+            onyomi4 = <h5 className={readClass}>音読み：{pageChars[kanjiArray[3]]['音読み']}</h5>
+        }
+        else{
+            kunyomi1 = '';
+            onyomi1 = '';
+            kunyomi2 = '';
+            onyomi2 = '';
+            kunyomi3 = '';
+            onyomi3 = '';
+            kunyomi4 = '';
+            onyomi4 = '';
+        }
+
         return(
             <React.Fragment>
                 <h1 className="text-center py-3" onClick={this.changePage}>{章}</h1>
@@ -75,13 +102,32 @@ class Section extends React.Component {
                         </select>
                     </div>
                 </form>
-                {Object.keys(pageChars).map(kanji => 
-                    <div className="py-3">
-                        <h3 className={displayClass}>{kanji}</h3>
-                        <h5 className={readClass}>訓読み：{pageChars[kanji]['訓読み']}</h5>
-                        <h5 className={readClass}>音読み：{pageChars[kanji]['音読み']}</h5>
-                    </div>
-                )}
+
+                <div className="py-3">
+                    <h3 className={displayClass}>{kanjiArray[0]}</h3>
+                    {kunyomi1}
+                    {onyomi1}
+                </div>
+
+                <div className="py-3">
+                    <h3 className={displayClass}>{kanjiArray[1]}</h3>
+                    {kunyomi2}
+                    {onyomi2}
+                </div>
+
+                <div className="py-3">
+                    <h3 className={displayClass}>{kanjiArray[2]}</h3>
+                    {kunyomi3}
+                    {onyomi3}
+                </div>
+
+                <div className="py-3">
+                    <h3 className={displayClass}>{kanjiArray[3]}</h3>
+                    {kunyomi4}
+                    {onyomi4}
+                </div>
+
+
                 <div className="container">
                     <div className="row justify-content-around">
                         <button onClick={this.showKanji}>Show</button>
