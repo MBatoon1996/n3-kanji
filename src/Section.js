@@ -127,9 +127,9 @@ class Section extends React.Component {
             buttonClass: "mx-3",
         });
         if(this.state.mode==="読み")
-            this.setState({ displayClass: 'd-none' });
+            this.setState({ displayClass1: 'd-none', displayClass2: 'd-none', displayClass3: 'd-none', displayClass4: 'd-none', });
         else if (this.state.mode === "漢字")
-            this.setState({ readClass: 'd-none' });
+            this.setState({ readClass1: 'd-none', readClass2: 'd-none', readClass3: 'd-none', readClass4: 'd-none', });
     }
 
     render() {
